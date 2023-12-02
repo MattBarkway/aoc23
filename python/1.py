@@ -1,7 +1,7 @@
 import itertools
 import regex as re
 
-from loading import load_input, write_output
+from loading import load_input
 
 
 def get_calibration(text):
@@ -27,7 +27,7 @@ def get_calibration_pt2(text):
 
     def to_num(num):
         return valid_numbers.get(num, num)
-    nums = f"{to_num(filtered[0])}{to_num(filtered[-1])}"
+
     return int(f"{to_num(filtered[0])}{to_num(filtered[-1])}")
 
 
