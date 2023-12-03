@@ -22,13 +22,20 @@ def run():
 
 
 def get_symbols(schematic: list[str]) -> list[tuple[int, int]]:
-    symbols = []
+    return get_match_coords(schematic, r"([^0-9.\n])")
+
+
+def get_match_coords(schematic: list[str], pattern: str) -> list[tuple[int, int]]:
+    coords = []
     for idx, line in enumerate(schematic):
         row = idx
-        for match in re.finditer(r"([^0-9.\n])", line):
-            print(match.group())
-            symbols.append((match.start(), row))
-    return symbols
+        for match in re.finditer(pattern, line):
+            coords.append((match.start(), row))
+    return coords
+
+
+def get_gears(schematic: list[str]) -> list[tuple[int, int]]:
+    return get_match_coords(schematic, r"(\*)")
 
 
 def get_part_nums(schematic: list[str], symbols: list[tuple[int, int]]) -> list[int]:
@@ -71,15 +78,6 @@ def get_gear_ratio(symbol: tuple[int, int], schematic: list[str]) -> int:
     surrounding_nums = get_parts_nums(symbol, schematic)
     if len(surrounding_nums) == 2:
         return mul(*surrounding_nums)
-
-
-def get_gears(schematic: list[str]) -> list[tuple[int, int]]:
-    gears = []
-    for idx, line in enumerate(schematic):
-        row = idx
-        for match in re.finditer(r"(\*)", line):
-            gears.append((match.start(), row))
-    return gears
 
 
 if __name__ == "__main__":
