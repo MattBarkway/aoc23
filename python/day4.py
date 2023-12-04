@@ -32,8 +32,6 @@ def pt_2(cards):
     return sum([v + 1 for v in copies.values()])
 
 
-# between 6,499,390 and 38,999,762
-# not 38,999,559
 def get_winners(card: str) -> list[int]:
     card_num, rest = card.split(": ")
     winning_str, mine_str = rest.split("|")
