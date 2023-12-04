@@ -1,23 +1,27 @@
-use std::io::Error;
-use regex::Regex;
 use crate::utils::loader::load_input;
+use crate::utils::types::SimpleResult;
+use regex::Regex;
 
-pub(crate) fn day_1() -> Result<(), String> {
-    let lines = load_input("1.txt").map_err(|e| "Couldn't load soz")?;
-    let mut sum = 0;
-    for line in lines {
-        sum += get_coords(&line.map_err(|e| "Nope")?)?;
-    }
-    println!("{}", sum);
-    Ok(())
+pub fn pt_1() -> SimpleResult<i32> {
+    Ok(load_input("1.txt")?
+        .map(|line| get_coords(&line?))
+        .collect::<SimpleResult<Vec<_>>>()?
+        .iter()
+        .sum())
 }
 
+pub fn pt_2() -> SimpleResult<i32> {
+    Ok(load_input("1.txt")?
+        .map(|line| get_coords(&line?))
+        .collect::<SimpleResult<Vec<_>>>()?
+        .iter()
+        .sum())
+}
 
-fn get_coords(line: &str) -> Result<i32, String> {
-    let re = Regex::new(r"(\d)").map_err(|e| "".to_owned())?;
-    let mut results = vec![];
-    for (_, [number]) in re.captures_iter(&line).map(|c| c.extract()) {
-        results.push(number.parse::<i32>().map_err(|e| "NaN")?);
-    }
-    Ok(format!("{}{}", results[0], results.last().ok_or("Empty list")?).parse::<i32>().map_err(|e| "NaN")?)
+fn get_coords(line: &str) -> SimpleResult<i32> {
+    let results = Regex::new(r"(\d)")?
+        .captures_iter(&line)
+        .map(|c| c.extract())
+        .map(|(_, [number])| number.parse::<i32>()).collect::<SimpleResult<Vec<_>>>();
+    Ok(format!("{}{}", results[0], results.last().ok_or("Empty list")?).parse::<i32>()?)
 }
