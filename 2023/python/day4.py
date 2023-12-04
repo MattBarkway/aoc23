@@ -10,13 +10,7 @@ def run():
 
 
 def pt_1(cards: list[str]) -> int:
-    score = []
-    for card in cards:
-        my_winners = get_winners(card)
-        if my_winners:
-            score.append(2 ** (len(my_winners) - 1))
-
-    return sum(score)
+    return sum(map(lambda x: 2 ** (len(x) - 1), filter(None, map(get_winners, cards))))
 
 
 def pt_2(cards: list[str]) -> int:

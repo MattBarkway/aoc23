@@ -3,6 +3,18 @@ import regex as re
 
 from loading import load_input
 
+VALID_NUMBERS = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+}
+
 
 def get_calibration(text):
     out = re.findall(r"(\d)", text)
@@ -10,23 +22,11 @@ def get_calibration(text):
 
 
 def get_calibration_pt2(text):
-    valid_numbers = {
-        "one": 1,
-        "two": 2,
-        "three": 3,
-        "four": 4,
-        "five": 5,
-        "six": 6,
-        "seven": 7,
-        "eight": 8,
-        "nine": 9,
-    }
-    numbers_pattern = r"(\d)|" + "|".join([f"({num})" for num in valid_numbers])
-    out = re.findall(numbers_pattern, text, overlapped=True)
-    filtered = [i for i in itertools.chain(*out) if i]
+    numbers_pattern = r"(\d)|" + "|".join([f"({num})" for num in VALID_NUMBERS])
+    filtered = tuple(itertools.chain(*filter(None, re.findall(numbers_pattern, text, overlapped=True))))
 
     def to_num(num):
-        return valid_numbers.get(num, num)
+        return VALID_NUMBERS.get(num, num)
 
     return int(f"{to_num(filtered[0])}{to_num(filtered[-1])}")
 

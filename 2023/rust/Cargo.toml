@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+onig = "6.4.0"
 regex = { version = "1.10.2", features = [] }

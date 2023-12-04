@@ -28,9 +28,8 @@ def get_symbols(schematic: list[str]) -> list[tuple[int, int]]:
 def get_match_coords(schematic: list[str], pattern: str) -> list[tuple[int, int]]:
     coords = []
     for idx, line in enumerate(schematic):
-        row = idx
         for match in re.finditer(pattern, line):
-            coords.append((match.start(), row))
+            coords.append((match.start(), idx))
     return coords
 
 

@@ -1,6 +1,7 @@
 import itertools
 import re
-from operator import sub
+from functools import reduce
+from operator import sub, mul
 
 from loading import load_input
 
@@ -15,41 +16,33 @@ COLOURS = {
 
 def run():
     inputs = load_input("2.txt")
-    # nums = []
-    # for line in inputs:
-    #     game_num = int(re.findall(r"Game (\d+):", line)[0])
-    #     if is_valid_game(line):
-    #         nums.append(game_num)
-    # print(sum(nums))
+    nums = []
+    for line in inputs:
+        game_num = int(re.findall(r"Game (\d+):", line)[0])
+        if is_valid_game(line):
+            nums.append(game_num)
+    print(sum(nums))
 
     # pt 2
     powers = []
     for line in inputs:
-        game_num = int(re.findall(r"Game (\d+):", line)[0])
         samples = get_samples(line)
-        itertools.chain(*samples)
         max_tuple = [max(i) for i in zip(*samples)]
-        powers.append(max_tuple[0] * max_tuple[1] * max_tuple[2])
-
+        powers.append(reduce(mul, max_tuple))
     print(sum(powers))
 
 
 def is_valid_game(line):
-    samples = get_samples(line)
-    for sample in samples:
-        subtracted = [i for i in map(sub, TARGET_GAME, sample)]
+    for sample in get_samples(line):
         if not len([i for i in map(sub, TARGET_GAME, sample) if i >= 0]) == 3:
             return False
     return True
 
 
 def get_samples(line) -> list[tuple[int, int, int]]:
-    games = re.sub(r"Game \d+: ", "", line).split(";")
     sample_tuples = []
-    for sample in games:
-        reads = sample.split(", ")
-        sample_tuple = into_tuple(reads)
-        sample_tuples.append(sample_tuple)
+    for sample in re.sub(r"Game \d+: ", "", line).split(";"):
+        sample_tuples.append(into_tuple(sample.split(", ")))
     return sample_tuples
 
 
@@ -57,8 +50,7 @@ def into_tuple(reads) -> tuple[int, int, int]:
     out = [0, 0, 0]
     for read in reads:
         num, colour = read.split()
-        idx = COLOURS.get(colour)
-        out[idx] = int(num)
+        out[COLOURS.get(colour)] = int(num)
     return tuple(out)
 
 
