@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python"
+name = "aoc23"
 version = "0.1.0"
 description = ""
 authors = ["MattBarkway <contact@mattbarkway.dev>"]
