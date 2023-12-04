@@ -5,8 +5,8 @@ from loading import load_input
 
 def run():
     cards = load_input("4.txt")
-    pt_1(cards)
-    pt_2(cards)
+    print(pt_1(cards))
+    print(pt_2(cards))
 
 
 def pt_1(cards):
@@ -27,9 +27,9 @@ def pt_2(cards):
         card_num = int(card_str.split()[1])
         num_copies = copies[card_num]
         my_winners = get_winners_pt2(rest)
-        for i in range(len(my_winners) + 1):
-            copies[card_num + i] += 1 + num_copies
-    return sum([v for v in copies.values()])
+        for i in range(len(my_winners)):
+            copies[card_num + i + 1] += 1 + num_copies
+    return sum([v + 1 for v in copies.values()])
 
 
 # between 6,499,390 and 38,999,762
