@@ -9,7 +9,7 @@ def run():
     print(pt_2(cards))
 
 
-def pt_1(cards):
+def pt_1(cards: list[str]) -> int:
     score = []
     for card in cards:
         my_winners = get_winners(card)
@@ -19,7 +19,7 @@ def pt_1(cards):
     return sum(score)
 
 
-def pt_2(cards):
+def pt_2(cards: list[str]) -> int:
     copies: dict[int, int] = collections.defaultdict(int)
 
     for card in cards:
@@ -47,8 +47,8 @@ def get_winners_pt2(rest: str) -> list[int]:
     return [i for i in mine if i in winning]
 
 
-def str_to_nums(num_str):
-    return [i.strip() for i in num_str.split()]
+def str_to_nums(num_str: str) -> list[int]:
+    return [int(i.strip()) for i in num_str.split()]
 
 
 if __name__ == "__main__":
