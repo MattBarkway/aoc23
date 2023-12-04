@@ -22,8 +22,8 @@ fn get_coords(line: &str) -> SimpleResult<i32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::utils::types::SimpleResult;
     use super::*;
+    use crate::utils::types::SimpleResult;
 
     #[test]
     fn test_pt_1() -> SimpleResult<()> {

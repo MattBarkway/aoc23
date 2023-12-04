@@ -1,10 +1,12 @@
 use crate::utils::types::SimpleResult;
 
 pub fn pt_1<T: AsRef<str>>(lines: &[T]) -> SimpleResult<()> {
-    Ok(());
+    Ok(())
+}
 
 pub fn pt_2<T: AsRef<str>>(lines: &[T]) -> SimpleResult<()> {
-    Ok(());
+    Ok(())
+}
 
 #[cfg(test)]
 mod tests {
