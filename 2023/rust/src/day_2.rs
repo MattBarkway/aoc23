@@ -1,5 +1,5 @@
 use crate::utils::types::SimpleResult;
-use itertools::{Itertools, max};
+use itertools::{max, Itertools};
 use num::ToPrimitive;
 use phf::phf_map;
 use regex::Regex;
@@ -77,7 +77,11 @@ pub fn pt_2<T: AsRef<str>>(lines: &[T]) -> SimpleResult<i32> {
             acc.2.push(i.b);
             acc
         });
-        let max_game = (rs.iter().max().ok_or("")?, gs.iter().max().ok_or("")?, bs.iter().max().ok_or("")?);
+        let max_game = (
+            rs.iter().max().ok_or("")?,
+            gs.iter().max().ok_or("")?,
+            bs.iter().max().ok_or("")?,
+        );
         max_powers.push(max_game.0 * max_game.1 * max_game.2);
     }
     Ok(max_powers.iter().sum())

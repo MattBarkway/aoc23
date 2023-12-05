@@ -4,6 +4,7 @@ use clap::Parser;
 
 mod day_1;
 mod day_2;
+mod day_5;
 mod utils;
 
 #[derive(Parser, Debug)]
@@ -26,6 +27,13 @@ fn main() -> SimpleResult<()> {
             println!("Day 2 (pt1): {}!", one);
             let two = day_2::pt_2(&input)?;
             println!("Day 2 (pt2): {}!", two);
+        }
+        5 => {
+            let input = load_input("5.txt")?;
+            let one = day_2::pt_1(&input)?;
+            println!("Day 5 (pt1): {}!", one);
+            let two = day_2::pt_2(&input)?;
+            println!("Day 5 (pt2): {}!", two);
         }
         _ => println!("I've not done that day yet!"),
     }
