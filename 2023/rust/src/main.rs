@@ -4,8 +4,6 @@ use clap::Parser;
 
 mod day_1;
 mod day_2;
-mod day_3;
-mod day_4;
 mod utils;
 
 #[derive(Parser, Debug)]
