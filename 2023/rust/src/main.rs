@@ -30,10 +30,10 @@ fn main() -> SimpleResult<()> {
         }
         5 => {
             let input = load_input("5.txt")?;
-            let one = day_2::pt_1(&input)?;
+            let one = day_5::pt_1(&input)?;
             println!("Day 5 (pt1): {}!", one);
-            let two = day_2::pt_2(&input)?;
-            println!("Day 5 (pt2): {}!", two);
+            // let two = day_5::pt_2(&input)?;
+            // println!("Day 5 (pt2): {}!", two);
         }
         _ => println!("I've not done that day yet!"),
     }
