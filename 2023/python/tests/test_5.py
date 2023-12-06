@@ -36,4 +36,8 @@ humidity-to-location map:
 
 
 def test_pt_1():
-    assert day5.pt_1(dataset.split("\n")) == 35
+    assert day5.pt_1(dataset) == 35
+
+
+def test_pt_2():
+    assert day5.pt_2(dataset) == 46
