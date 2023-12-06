@@ -17,15 +17,12 @@ def run():
 
 
 def pt_1(dataset: str) -> int:
-    races = load_races(dataset)
-    winning_combos = [len(evaluate_race(race)) for race in races]
-    out = reduce(mul, winning_combos)
-    return out
+    winning_combos = [len(evaluate_race(race)) for race in load_races(dataset)]
+    return reduce(mul, winning_combos)
 
 
 def pt_2(dataset: str) -> int:
-    race = load_race(dataset)
-    winning_combos = evaluate_race(race)
+    winning_combos = evaluate_race(load_race(dataset))
     return len(winning_combos)
 
 
@@ -53,12 +50,7 @@ def load_race(dataset: str) -> Race:
 
 
 def evaluate_race(race: Race) -> list[int]:
-    times = []
-    for hold_time in range(1, race.time):
-        distance = (race.time - hold_time) * hold_time
-        if distance > race.distance:
-            times.append(hold_time)
-    return times
+    return [t for t in range(1, race.time) if (race.time - t) * t > race.distance]
 
 
 if __name__ == "__main__":
