@@ -23,7 +23,7 @@ def get_calibration(text):
 
 def get_calibration_pt2(text):
     numbers_pattern = r"(\d)|" + "|".join([f"({num})" for num in VALID_NUMBERS])
-    filtered = tuple(itertools.chain(*filter(None, re.findall(numbers_pattern, text, overlapped=True))))
+    filtered = tuple(filter(None, itertools.chain(*re.findall(numbers_pattern, text, overlapped=True))))
 
     def to_num(num):
         return VALID_NUMBERS.get(num, num)
