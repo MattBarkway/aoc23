@@ -44,7 +44,7 @@ def generate_year_template(year: int, day=1):
         / "python"
         / "pyproject.toml",
     }
-    extras = [pathlib.Path("aoc") / "{year}" / "inputs" / "{day}.txt"]
+    extras = [pathlib.Path("{year}") / "inputs" / "{day}.txt"]
 
     for templ, out in templates.items():
         templ_str = load_template(templ)
@@ -68,7 +68,7 @@ def generate_year_template(year: int, day=1):
         out_path = pathlib.Path(formatted_path)
         if out_path.exists():
             continue
-        write_template(pathlib.Path(out_path), "")
+        write_template(pathlib.Path(out_path), " ")
 
 
 def generate_day_template(day: int, year: int):
