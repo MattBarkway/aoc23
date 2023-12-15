@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "aoc"
+version = "0.1.0"
+description = ""
+authors = ["Matt Barkway <matt.barkway@ovo.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.7"
+pytest = "^7.4.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
