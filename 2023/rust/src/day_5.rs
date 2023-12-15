@@ -5,34 +5,12 @@ use num::ToPrimitive;
 use std::collections::HashMap;
 
 struct RangeMap {
-    destination: i32,
-    source: i32,
-    range: i32,
+    destination: u32,
+    source: u32,
+    range: u32,
 }
 
-impl RangeMap {
-    fn to_hashmap(&self) -> HashMap<i32, i32> {
-        let mut map: HashMap<i32, i32> = HashMap::new();
-
-        for i in 0..self.range {
-            map.insert(self.source + i, self.destination + i);
-        }
-        map
-    }
-
-    fn from_vec(vec: Vec<i32>) -> SimpleResult<RangeMap> {
-        if vec.len() != 3 {
-            ()
-        }
-        Ok(RangeMap {
-            destination: vec[0],
-            source: vec[1],
-            range: vec[2],
-        })
-    }
-}
-
-pub fn pt_1<T: AsRef<str>>(lines: &[T]) -> SimpleResult<i32> {
+pub fn pt_1<T: AsRef<str>>(lines: &[T]) -> SimpleResult<u32> {
     let seeds = get_seeds(&lines[0].as_ref())?;
     let (maps, ordering) = parse_maps(
         &lines
@@ -49,17 +27,15 @@ pub fn pt_2<T: AsRef<str>>(lines: &[T]) -> SimpleResult<()> {
     Ok(())
 }
 
-fn run_maps(maps: HashMap<String, Vec<RangeMap>>, seeds: Vec<i32>, ordering: Vec<String>) -> SimpleResult<Vec<i32>> {
+fn run_maps(maps: HashMap<String, Vec<RangeMap>>, seeds: Vec<u32>, ordering: Vec<String>) -> SimpleResult<Vec<u32>> {
     let mut finals = vec![];
     for seed in seeds {
-        let mut next: i32 = seed;
+        let mut next: u32 = seed;
         for section in &ordering {
             println!("{}", section);
             for map in &maps[section] {
-                let foo = map.to_hashmap();
-                if let Some(new) = map.to_hashmap().get(&seed) {
-                    next = new.to_i32().ok_or("Couldn't convert")?;
-                    break;
+                if map.source <= next && next < (map.source + map.range) {
+                    next -= map.source + map.destination + map.range
                 }
             }
         }
@@ -68,51 +44,51 @@ fn run_maps(maps: HashMap<String, Vec<RangeMap>>, seeds: Vec<i32>, ordering: Vec
     Ok(finals)
 }
 
-fn parse_maps(lines: &[&str]) -> SimpleResult<(HashMap<String, Vec<RangeMap>>, Vec<String>)> {
-    let mut iter = lines
-        .iter()
-        // .filter(|i| !i.trim().is_empty())
-        .cloned()
-        .peekable();
-    let mut outmap: HashMap<String, Vec<RangeMap>> = HashMap::new();
-    let mut ordering = vec![];
-    while let Some(row) = &iter.peek().copied() {
-        if row.contains("map:") {
-            ordering.push(row[0..row.len() - 5].to_owned());
-            let mapping_strs: Vec<_> = iter
-                .by_ref()
-                .skip(1)
-                .take_while(|&row| !row.trim().is_empty())
-                .collect();
-            let numbers: Vec<RangeMap> = mapping_strs
-                .iter()
-                .map(|&line| {
-                    line.split_whitespace()
-                        .filter_map(|num| num.parse().ok())
-                        .collect::<Vec<i32>>()
-                })
-                .map(|nums| RangeMap {
-                    destination: nums[0],
-                    source: nums[1],
-                    range: nums[2],
-                })
-                .collect();
-            outmap.insert(row[0..row.len() - 5].to_owned(), numbers);
-        } else {
-            iter.next();
-        }
-    }
-    Ok((outmap, ordering))
-}
+// fn parse_maps(lines: &[&str]) -> SimpleResult<(HashMap<String, Vec<RangeMap>>, Vec<String>)> {
+//     let mut iter = lines
+//         .iter()
+//         // .filter(|i| !i.trim().is_empty())
+//         .cloned()
+//         .peekable();
+//     let mut outmap: HashMap<String, Vec<RangeMap>> = HashMap::new();
+//     let mut ordering = vec![];
+//     while let Some(row) = &iter.peek().copied() {
+//         if row.contains("map:") {
+//             ordering.push(row[0..row.len() - 5].to_owned());
+//             let mapping_strs: Vec<_> = iter
+//                 .by_ref()
+//                 .skip(1)
+//                 .take_while(|&row| !row.trim().is_empty())
+//                 .collect();
+//             let numbers: Vec<RangeMap> = mapping_strs
+//                 .iter()
+//                 .map(|&line| {
+//                     line.split_whitespace()
+//                         .filter_map(|num| num.parse().ok())
+//                         .collect::<Vec<u32>>()
+//                 })
+//                 .map(|nums| RangeMap {
+//                     destination: nums[0],
+//                     source: nums[1],
+//                     range: nums[2],
+//                 })
+//                 .collect();
+//             outmap.insert(row[0..row.len() - 5].to_owned(), numbers);
+//         } else {
+//             iter.next();
+//         }
+//     }
+//     Ok((outmap, ordering))
+// }
 
-pub fn get_seeds(line: &str) -> SimpleResult<Vec<i32>> {
-    let (_, seeds_str) = line.split_once(": ").ok_or("")?;
-    Ok(seeds_str
-        .split(" ")
-        .into_iter()
-        .map(|i| i.parse::<i32>())
-        .collect::<Result<Vec<i32>, _>>()?)
-}
+// pub fn get_seeds(line: &str) -> SimpleResult<Vec<u32>> {
+//     let (_, seeds_str) = line.split_once(": ").ok_or("")?;
+//     Ok(seeds_str
+//         .split(" ")
+//         .into_iter()
+//         .map(|i| i.parse::<u32>())
+//         .collect::<Result<Vec<u32>, _>>()?)
+// }
 
 #[cfg(test)]
 mod tests {

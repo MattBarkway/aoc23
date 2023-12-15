@@ -14,7 +14,6 @@ def run():
     print(sum(part_nums))
 
     # pt2
-
     gears = get_gears(schematic)
     ratios = get_gear_ratios(schematic, gears)
 

@@ -1,4 +1,3 @@
-import itertools
 import re
 from functools import reduce
 from operator import sub, mul

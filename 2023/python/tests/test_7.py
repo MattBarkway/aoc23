@@ -31,4 +31,3 @@ def test_into_score(hand, expected):
 )
 def test_into_score_pt2(hand, expected):
     assert day7.into_score_pt2((hand, None)) == expected
-# 255632664
