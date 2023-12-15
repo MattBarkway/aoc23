@@ -1,6 +1,6 @@
 import pytest
 
-import day7
+import day_7
 
 dataset = """32T3K 765
 T55J5 684

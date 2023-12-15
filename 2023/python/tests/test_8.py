@@ -1,6 +1,6 @@
 import pytest
 
-import day8
+import day_8
 
 dataset_1 = """RL
 

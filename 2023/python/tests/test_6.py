@@ -1,4 +1,4 @@
-import day6
+import day_6
 
 dataset = """Time:      7  15   30
 Distance:  9  40  200"""
