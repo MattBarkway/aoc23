@@ -20,12 +20,29 @@ def year_exists(year: int):
 
 def generate_year_template(year: int, day=1):
     templates = {
-        pathlib.Path("aoc") / "templates" / "test_{day}.py.tmpl": pathlib.Path("{year}") / "python" / "tests" / "test_{day}.py",
-        pathlib.Path("aoc") / "templates" / "day_{day}.py.tmpl": pathlib.Path("{year}") / "python" / "day_{day}.py",
+        pathlib.Path("aoc")
+        / "templates"
+        / "test_{day}.py.tmpl": pathlib.Path("{year}")
+        / "python"
+        / "tests"
+        / "test_{day}.py",
+        pathlib.Path("aoc")
+        / "templates"
+        / "day_{day}.py.tmpl": pathlib.Path("{year}")
+        / "python"
+        / "day_{day}.py",
     }
     copies = {
-        pathlib.Path("aoc") / "templates" / "loading.py": pathlib.Path("{year}") / "python" / "loading.py",
-        pathlib.Path("aoc") / "templates" / "pyproject.toml": pathlib.Path("{year}") / "python" / "pyproject.toml",
+        pathlib.Path("aoc")
+        / "templates"
+        / "loading.py": pathlib.Path("{year}")
+        / "python"
+        / "loading.py",
+        pathlib.Path("aoc")
+        / "templates"
+        / "pyproject.toml": pathlib.Path("{year}")
+        / "python"
+        / "pyproject.toml",
     }
     extras = [pathlib.Path("aoc") / "{year}" / "inputs" / "{day}.txt"]
 
@@ -33,16 +50,25 @@ def generate_year_template(year: int, day=1):
         templ_str = load_template(templ)
         formatted = templ_str.format(day=day)
         formatted_path = str(out).format(year=year, day=day)
-        write_template(pathlib.Path(formatted_path), formatted)
+        out_path = pathlib.Path(formatted_path)
+        if out_path.exists():
+            continue
+        write_template(out_path, formatted)
 
     for copy, out in copies.items():
         copy_str = load_template(copy)
         formatted_path = str(out).format(year=year)
-        write_template(pathlib.Path(formatted_path), copy_str)
+        out_path = pathlib.Path(formatted_path)
+        if out_path.exists():
+            continue
+        write_template(out_path, copy_str)
 
     for extra in extras:
         formatted_path = str(extra).format(year=year, day=day)
-        write_template(pathlib.Path(formatted_path), "")
+        out_path = pathlib.Path(formatted_path)
+        if out_path.exists():
+            continue
+        write_template(pathlib.Path(out_path), "")
 
 
 def generate_day_template(day: int, year: int):
@@ -50,8 +76,8 @@ def generate_day_template(day: int, year: int):
 
 
 @click.command()
-@click.option('--year', "-y", help='Year number')
-@click.option('--day', "-d", help='Day number')
+@click.option("--year", "-y", help="Year number")
+@click.option("--day", "-d", help="Day number")
 def run(year=None, day=None):
     if not (year and day):
         print("Please a day and year")
@@ -59,5 +85,5 @@ def run(year=None, day=None):
     generate_day_template(day, year)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run()

@@ -1,0 +1,1 @@
+python aoc/generate.py -y "2023" -d "$1"
